@@ -74,54 +74,6 @@
     "tags": ["writing", "content"]
   },
   {
-    "id": "code-review",
-    "title": "Code Review",
-    "icon": "💻",
-    "description": "Ask for a structured code review.",
-    "template": "Review the following {{language}} code for {{focus}}. Be specific about {{constraints}}.\n\nCode:\n\n{{code}}",
-    "fields": [
-      {"key": "language", "label": "Language", "type": "select", "options": ["Swift", "Kotlin", "TypeScript", "Python", "JavaScript", "Java", "C#"], "required": true},
-      {"key": "focus", "label": "Focus Areas", "type": "text", "placeholder": "e.g., performance, readability", "required": true},
-      {"key": "constraints", "label": "Constraints", "type": "text", "placeholder": "e.g., iOS 16 minimum"},
-      {"key": "code", "label": "Code", "type": "textarea", "required": true}
-    ],
-    "tags": ["dev", "review"]
-  },
-  {
-    "id": "marketing-ad",
-    "title": "Marketing Ad Copy",
-    "icon": "📣",
-    "description": "Generate compelling marketing ad copy.",
-    "template": "Create a {{adType}} ad for {{product}} targeting {{audience}}. The tone should be {{tone}} and highlight {{benefits}}. Include a strong call-to-action.",
-    "fields": [
-      {"key": "product", "label": "Product/Service", "type": "text", "required": true, "placeholder": "e.g., Project management app"},
-      {"key": "audience", "label": "Target Audience", "type": "text", "required": true, "placeholder": "e.g., Small business owners"},
-      {"key": "adType", "label": "Ad Type", "type": "select", "options": ["Social Media", "Email", "Banner", "Video Script"], "required": true},
-      {"key": "tone", "label": "Tone", "type": "select", "options": ["Urgent", "Friendly", "Professional", "Playful"], "required": true},
-      {"key": "benefits", "label": "Key Benefits", "type": "text", "required": true, "placeholder": "e.g., saves time, increases productivity"}
-    ],
-    "tags": ["marketing", "advertising"]
-  },
-  {
-    "id": "press-release",
-    "title": "Press Release",
-    "icon": "🗞️",
-    "description": "Draft a professional press release.",
-    "template": "FOR IMMEDIATE RELEASE\n\n{{headline}}\n\n{{location}}, {{date}} - {{company}} announces {{announcement}}. {{details}}\n\n{{quote}}\n\nAbout {{company}}: {{companyDescription}}\n\nContact: {{contact}}",
-    "fields": [
-      {"key": "headline", "label": "Headline", "type": "text", "required": true, "placeholder": "e.g., Company X Launches Revolutionary AI Tool"},
-      {"key": "company", "label": "Company Name", "type": "text", "required": true},
-      {"key": "location", "label": "Location", "type": "text", "required": true, "placeholder": "e.g., San Francisco, CA"},
-      {"key": "date", "label": "Date", "type": "text", "required": true, "placeholder": "e.g., March 15, 2024"},
-      {"key": "announcement", "label": "Main Announcement", "type": "text", "required": true, "placeholder": "e.g., the launch of their new AI platform"},
-      {"key": "details", "label": "Details", "type": "textarea", "required": true, "placeholder": "Provide more context and details"},
-      {"key": "quote", "label": "Executive Quote", "type": "textarea", "required": true, "placeholder": "Quote from CEO or spokesperson"},
-      {"key": "companyDescription", "label": "Company Description", "type": "textarea", "required": true},
-      {"key": "contact", "label": "Contact Information", "type": "text", "required": true}
-    ],
-    "tags": ["pr", "news"]
-  },
-  {
     "id": "lesson-plan",
     "title": "Lesson Plan",
     "icon": "🎓",
@@ -137,22 +89,5 @@
       {"key": "assessment", "label": "Assessment Method", "type": "textarea", "required": true, "placeholder": "How will you assess learning?"}
     ],
     "tags": ["education", "teaching"]
-  },
-  {
-    "id": "test-cases",
-    "title": "Test Case Generator",
-    "icon": "🧪",
-    "description": "Generate comprehensive test cases.",
-    "template": "Test Cases for {{feature}}\n\nTest Scenario: {{scenario}}\nPlatform: {{platform}}\nPriority: {{priority}}\n\nPositive Test Cases:\n{{positiveTests}}\n\nNegative Test Cases:\n{{negativeTests}}\n\nEdge Cases:\n{{edgeCases}}",
-    "fields": [
-      {"key": "feature", "label": "Feature/Function", "type": "text", "required": true, "placeholder": "e.g., User Login"},
-      {"key": "scenario", "label": "Test Scenario", "type": "text", "required": true, "placeholder": "e.g., User authentication flow"},
-      {"key": "platform", "label": "Platform", "type": "select", "options": ["Web", "Mobile", "Desktop", "API"], "required": true},
-      {"key": "priority", "label": "Priority", "type": "select", "options": ["High", "Medium", "Low"], "required": true},
-      {"key": "positiveTests", "label": "Positive Test Cases", "type": "textarea", "required": true, "placeholder": "Valid input scenarios"},
-      {"key": "negativeTests", "label": "Negative Test Cases", "type": "textarea", "required": true, "placeholder": "Invalid input scenarios"},
-      {"key": "edgeCases", "label": "Edge Cases", "type": "textarea", "required": true, "placeholder": "Boundary conditions"}
-    ],
-    "tags": ["testing", "qa"]
   }
 ]
