@@ -15,6 +15,51 @@
     "tags": ["ios", "interview", "technical", "maang"]
   },
   {
+    "id": "deep-research-wizard",
+    "title": "Deep Research Wizard",
+    "icon": "🧠",
+    "description": "Advanced deep research with minimal inputs: topic + questions.",
+    "template": "Deep‑Research Wizard — Lite (Numbered dropdowns)\n\n# =========================\n# CONFIG — fill me in (minimal)\n# =========================\ntopic: \"{{topic}}\"\n\n# One per line. Prefix with \"SQ:\" to mark deep‑dives. Example:\n# What are the key risks?\n# SQ: Compare vendor lock‑in across top 3 options\nquestions: |\n  {{questions}}\n\nscope:\n  section_count: {{section_count}}\n  section_titles: {{section_titles}}\n\n# Human‑readable labels chosen from dropdowns below\naudience_label: \"{{audience_label}}\"\nresearcher_profile_label: \"{{researcher_profile_label}}\"\n\n# =========================\n# PROMPT — do not edit below this line\n# =========================\nYou are the **Deep‑Research Wizard (Lite)**. Assume **advanced depth** by default.\n\n## Normalize Inputs\n- Strip leading numbering from labels (e.g., \"1) \").\n- Parse `audience_label` into {type, expertise}. Examples:\n  - \"Intermediate Executive\" → {type: executive, expertise: intermediate}\n  - \"Expert Engineer\" → {type: engineer, expertise: expert}\n  - \"Intermediate Policy\" → {type: policy, expertise: intermediate}\n  - \"Intermediate General\" → {type: general, expertise: intermediate}\n  - \"Novice General\" → {type: general, expertise: novice}\n- Parse `researcher_profile_label` into {role, years_experience}. Examples:\n  - \"7-year Senior Analyst\" → {role: Senior Analyst, years_experience: 7}\n  - \"12-year Domain SME\" → {role: Domain SME, years_experience: 12}\n- Split `questions` by newline:\n  - Lines starting with `SQ:` → sub-questions\n  - All other lines → guiding questions\n  - Ignore empty lines and dedupe.\n\n## Objectives\n1) Infer and echo a crisp Primary Question from `topic`.\n2) Answer guiding questions and sub‑questions with evidence and inline links.\n3) Deliver exactly `scope.section_count` advanced‑level sections.\n\n## Built‑in defaults (no user input needed)\n- Triangulation: Back key claims with ≥2 independent credible sources when available; prefer primary/official data.\n- Recency (automatic): Choose an appropriate window based on topic; favor very recent sources for fast‑moving areas, include seminal works for fundamentals.\n- Search craft: Use site:, filetype:, intitle:, boolean ops; add non‑English variants if indicated.\n- Dates: Distinguish publish vs event dates.\n- Transparency: Mark weakly supported claims UNVERIFIED and state what would raise confidence.\n\n## Method (loop until complete)\nA) Plan — Restate topic & success criteria (3–5 bullets). Build a Question Map (Primary → guiding → SQs).\nB) Search — Broad → focused → site/filetype passes; log every query and why it was run.\nC) Source Triage — Maintain Source Log:\n   [ID, Title, Author/Org, Publisher, Date, URL, Type, Summary(≤5 bullets), Key Data(≤25 words), Relevance(SQ IDs), Reliability(1–5), Notes].\nD) Extract — Build Evidence Matrix (SQ ↔ claims/data ↔ Source IDs) with Confidence 0–100 and Triangulation Count.\nE) Analyze — Compare viewpoints; quantify trade‑offs; note assumptions/biases; include credible counter‑evidence.\nF) Synthesize — Produce `scope.section_count` sections (use `section_titles` if provided). Each section: Bottom line first → reasoning → evidence call‑outs with inline links.\nG) Completion check — Stop when: (i) all mapped questions are addressed; and (ii) two consecutive search rounds add <10% new info. If not, deliver best‑effort + list top gaps & next steps.\n\n## Deliverables (in order)\n1) Executive Summary — 8–12 bullets tuned to the normalized audience.\n2) Key Findings — confidence scores + 1–2 inline links each.\n3) Deep‑Dive Sections — exactly `scope.section_count`.\n4) Comparative Tables/Matrices — features, timelines, cost/benefit, pros/cons where helpful.\n5) Evidence Matrix — claims ↔ sources with confidence & triangulation.\n6) Limitations & Uncertainties — what would change conclusions.\n7) Practical Recommendations — if decision support is implied.\n8) Appendix — Source Log and Queries Log (all queries used).\n\n## Output formatting\n- Clear headings; tight sentences; tables where they help.\n- Cite with inline hyperlinks (no special style).\n- Match tone to audience and researcher_profile.\n- Begin by echoing the Primary Question, Plan, and Question Map, then proceed.\n",
+    "fields": [
+      { "key": "topic", "label": "Topic", "type": "text", "required": true, "placeholder": "e.g., Privacy-preserving analytics for mobile apps" },
+      { "key": "questions", "label": "Questions (one per line; prefix 'SQ:' for deep‑dives)", "type": "textarea", "required": false, "placeholder": "What are the main risks?\nSQ: Compare vendor lock‑in across top 3 options" },
+      { "key": "section_count", "label": "Section Count", "type": "number", "min": 1, "max": 20, "required": true, "default": 5 },
+      { "key": "section_titles", "label": "Section Titles (optional JSON array)", "type": "text", "required": false, "placeholder": "[\"Intro\",\"Options\",\"Risks\",\"Recommendation\"]" },
+      {
+        "key": "audience_label",
+        "label": "Audience",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Intermediate Executive",
+          "2) Expert Engineer",
+          "3) Intermediate Engineer",
+          "4) Intermediate Policy",
+          "5) Intermediate General",
+          "6) Novice General"
+        ],
+        "default": "1) Intermediate Executive"
+      },
+  
+      {
+        "key": "researcher_profile_label",
+        "label": "Researcher Profile",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) 12-year Domain SME",
+          "2) 10-year Investigative Journalist",
+          "3) 7-year Senior Analyst",
+          "4) 7-year Data Scientist",
+          "5) 8-year Librarian",
+          "6) 6-year Policy Researcher"
+        ],
+        "default": "3) 7-year Senior Analyst"
+      }
+    ],
+    "tags": ["research","analysis","wizard"]
+  },
+  {
     "id": "blog-outline",
     "title": "Blog Outline",
     "icon": "📝",
