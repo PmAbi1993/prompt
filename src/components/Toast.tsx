@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 export interface ToastProps {
   message: string;
@@ -61,14 +61,14 @@ export function Toast({ message, type, duration = 3000, onClose }: ToastProps) {
 export function useToast() {
   const [toasts, setToasts] = useState<Array<{ id: string; props: Omit<ToastProps, 'onClose'> }>>([]);
 
-  const showToast = (props: Omit<ToastProps, 'onClose'>) => {
+  const showToast = useCallback((props: Omit<ToastProps, 'onClose'>) => {
     const id = Math.random().toString(36).substr(2, 9);
     setToasts(prev => [...prev, { id, props }]);
-  };
+  }, []);
 
-  const removeToast = (id: string) => {
+  const removeToast = useCallback((id: string) => {
     setToasts(prev => prev.filter(toast => toast.id !== id));
-  };
+  }, []);
 
   const ToastContainer = () => (
     <>

@@ -38,7 +38,7 @@ export function Builder() {
         });
       }
     }
-  }, [prompt?.id, showToast]);
+  }, [prompt?.id]); // Removed showToast from dependencies
 
   // Save draft on form changes
   useEffect(() => {
