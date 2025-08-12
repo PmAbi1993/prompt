@@ -63,15 +63,71 @@
     "id": "blog-outline",
     "title": "Blog Outline",
     "icon": "📝",
-    "description": "Create a structured blog outline for your content.",
-    "template": "Create a detailed blog outline about {{topic}} for {{audience}} with a {{tone}} tone. Include {{sections}} sections and key takeaways.",
+    "description": "Create a high-quality blog outline with minimal inputs: topic + questions.",
+    "template": "Blog Outline — Lite (Numbered dropdowns)\n\n# =========================\n# CONFIG — fill me in (minimal)\n# =========================\ntopic: \"{{topic}}\"\n\n# One per line. Optional helpers:\n# H2: <force this as a section title>\n# FAQ: <question to include in FAQ>\n# VISUAL: <diagram/table idea>\nquestions: |\n  {{questions}}\n\nscope:\n  section_count: {{section_count}}\n  section_titles: {{section_titles}}\n\n# Human‑readable labels chosen from dropdowns below\naudience_label: \"{{audience_label}}\"\ntone_label: \"{{tone_label}}\"\n\n# =========================\n# PROMPT — do not edit below this line\n# =========================\nYou are the **Blog Outline Wizard (Lite)**. Assume an advanced, professional outline by default.\n\n## Normalize Inputs\n- Strip leading numbering from labels (e.g., \"1) \").\n- Parse `audience_label` into {type, expertise}. Examples:\n  - \"Executive (Intermediate)\" → {type: executive, expertise: intermediate}\n  - \"Engineer (Expert)\" → {type: engineer, expertise: expert}\n  - \"General (Novice)\" → {type: general, expertise: novice}\n- Parse `tone_label` into a style descriptor (e.g., \"Technical & Precise\").\n- Split `questions` by newline and route:\n  - Lines starting with **H2:** → forced H2 section titles\n  - Lines starting with **FAQ:** → FAQ questions\n  - Lines starting with **VISUAL:** → visual suggestions\n  - Other lines → guiding notes/themes\n\n## Objectives\n1) Propose 3–5 compelling titles and a one‑sentence thesis tailored to the audience & tone.\n2) Produce exactly `scope.section_count` H2 sections (use `section_titles` if provided), each with 3–5 H3 talking points.\n3) Integrate the forced sections, FAQ items, and visuals from `questions`.\n\n## Built‑in defaults (no user input needed)\n- Reader intent first: Identify search/reader intent (TOFU/MOFU/BOFU) and angle the outline accordingly.\n- Evidence‑aware: Where claims are likely, note \"source needed\" and suggest credible source types.\n- SEO hygiene: Include a primary keyword, 5–8 supporting keywords, a 155‑char meta description, and a clean slug.\n- Clarity: One idea per bullet; avoid fluff; prioritize scannability.\n- Story arc: Hook → problem → solution → objections/risks → conclusion/CTA.\n\n## Method (fast loop)\nA) Plan — 3–5 bullets on audience, intent, angle.\nB) Outline Draft — H1 title → H2 sections (exactly `section_count`) with H3 bullets per section.\nC) Enrichment — Add FAQs (3–5), visual ideas, and internal/external link suggestions.\nD) Polish — Provide title options, meta, slug, and writing brief (tone, voice, reading level hint).\n\n## Deliverables (in order)\n1) Title Options (3–5) + One‑sentence Thesis\n2) Audience & Intent Snapshot (who it’s for, what they need, angle)\n3) Outline (H2/H3) — exactly `scope.section_count` H2s; 3–5 H3s each\n4) Key Takeaways (5–7 bullets)\n5) FAQs (3–5)\n6) SEO Pack — primary + supporting keywords, meta (≤155 chars), slug\n7) Visual Suggestions — diagrams/tables where they help\n8) Linking Suggestions — internal (generic placeholders if site unknown) + external authoritative sources\n9) Writing Brief — tone, voice, target reading level, rough word count per section\n\n## Output formatting\n- Use clear headings, tight bullets, and inline links only as suggestions (no full citations needed).\n- Start with Title Options & Thesis, then Audience & Intent, then the Outline.",
     "fields": [
-      {"key": "topic", "label": "Topic", "type": "text", "required": true, "placeholder": "e.g., SwiftUI performance"},
-      {"key": "audience", "label": "Audience", "type": "text", "required": true, "placeholder": "e.g., iOS developers"},
-      {"key": "tone", "label": "Tone", "type": "select", "options": ["Professional", "Friendly", "Technical"], "required": true},
-      {"key": "sections", "label": "Number of Sections", "type": "number", "min": 3, "max": 10, "required": true}
+      {
+        "key": "topic",
+        "label": "Topic",
+        "type": "text",
+        "required": true,
+        "placeholder": "e.g., SwiftUI performance tuning"
+      },
+      {
+        "key": "questions",
+        "label": "Questions & Notes (one per line — use H2:/FAQ:/VISUAL: prefixes as needed)",
+        "type": "textarea",
+        "required": false,
+        "placeholder": "H2: Common performance pitfalls\nFAQ: What profiler views should I learn first?\nVISUAL: Before/after rendering diagram\nBenchmarking checklist"
+      },
+      {
+        "key": "section_count",
+        "label": "Section Count",
+        "type": "number",
+        "min": 3,
+        "max": 12,
+        "required": true,
+        "default": 6
+      },
+      {
+        "key": "section_titles",
+        "label": "Section Titles (optional JSON array)",
+        "type": "text",
+        "required": false,
+        "placeholder": "[\"Intro\",\"Pitfalls\",\"Profiling\",\"Optimizations\",\"Case Study\",\"Wrap-up\"]"
+      },
+      {
+        "key": "audience_label",
+        "label": "Audience",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Executive (Intermediate)",
+          "2) Engineer (Expert)",
+          "3) Engineer (Intermediate)",
+          "4) Product Manager (Intermediate)",
+          "5) General Tech (Intermediate)",
+          "6) General (Novice)"
+        ],
+        "default": "2) Engineer (Expert)"
+      },
+      {
+        "key": "tone_label",
+        "label": "Tone",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Authoritative & Practical",
+          "2) Technical & Precise",
+          "3) Friendly & Approachable",
+          "4) Thought Leadership",
+          "5) Conversational Storytelling",
+          "6) Playful"
+        ],
+        "default": "1) Authoritative & Practical"
+      }
     ],
-    "tags": ["writing", "content"]
+    "tags": ["writing", "content", "outline"]
   },
   {
     "id": "lesson-plan",
