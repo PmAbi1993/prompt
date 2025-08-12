@@ -52,6 +52,7 @@
       {"key": "headline", "label": "Headline", "type": "text", "required": true, "placeholder": "e.g., Company X Launches Revolutionary AI Tool"},
       {"key": "company", "label": "Company Name", "type": "text", "required": true},
       {"key": "location", "label": "Location", "type": "text", "required": true, "placeholder": "e.g., San Francisco, CA"},
+      {"key": "date", "label": "Date", "type": "text", "required": true, "placeholder": "e.g., March 15, 2024"},
       {"key": "announcement", "label": "Main Announcement", "type": "text", "required": true, "placeholder": "e.g., the launch of their new AI platform"},
       {"key": "details", "label": "Details", "type": "textarea", "required": true, "placeholder": "Provide more context and details"},
       {"key": "quote", "label": "Executive Quote", "type": "textarea", "required": true, "placeholder": "Quote from CEO or spokesperson"},

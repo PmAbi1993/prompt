@@ -43,7 +43,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     mediaQuery.addEventListener('change', updateResolvedTheme);
 
     // Apply theme to document
-    document.documentElement.setAttribute('data-theme', resolvedTheme);
+    if (resolvedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
     
     return () => {
       mediaQuery.removeEventListener('change', updateResolvedTheme);
