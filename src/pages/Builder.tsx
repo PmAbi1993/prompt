@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Field } from '../components/Field';
 import { Preview } from '../components/Preview';
-import { useToast } from '../components/Toast';
+import { useToast } from '../contexts/ToastContext';
 import { PromptConfig, FormValues } from '../types';
 import { validateForm } from '../lib/validation';
 import { compileTemplate } from '../lib/compileTemplate';

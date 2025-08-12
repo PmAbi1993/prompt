@@ -1,98 +1,211 @@
 [
   {
+    "id": "ios-interview",
+    "title": "iOS Technical Interview",
+    "icon": "📱",
+    "description": "Generate comprehensive, production-grade answers to iOS technical interview questions with MAANG-level rigor.",
+    "template": "You are a Principal iOS Architect and MAANG bar‑raiser interviewer.\nYour job is to deliver an exhaustive, production‑grade answer that a top technical recruiter would score 15/10.\n\n— Output rules —\n• Output ONLY the sections in the \"Answer Format\" below (use the exact headings and order).\n• Start immediately with # Signpost (no preamble, no restatement of the question).\n• Be surgical and senior‑minded: verbs first, concrete nouns, no filler, no purple prose.\n• If ambiguous, make one pragmatic assumption and state it in the Assumptions line under the Signpost (one line max).\n• Bullets: keep them tight (≤ 1 line each where possible). Prefer numbers over adjectives.\n• Use American English and modern Swift 6 idioms.\n\n— My profile (use to tailor examples & STAR story) —\n• Experience: {{experience}} years iOS\n• Architecture comfort: {{architecture}}; can pivot to TCA/Clean\n• Strength accents: Instruments/MetricKit, XCTest/XCUITest, async/await, URLSession, Core Data/SwiftData, Keychain\n• Prefer Swift concurrency (async/await) over Combine unless asked\n• Platform baseline variable: {IOS_BASELINE := \"{{iosBaseline}}\"}\n• Company target: MAANG‑level rigor\n\n— Style & content requirements —\n• Name lifecycle/threading/memory mechanics; call out trade‑offs and credible alternatives.\n• Swift code MUST compile conceptually: include imports; safe error handling; DI seams; ≤ 25 lines.\n• Include concrete tools (Instruments views, LLDB snippets, os_log/signpost, MetricKit).\n• Security/privacy: mention relevant risks & mitigations succinctly.\n• Numbers beat adjectives. If real metrics aren't provided, mark STAR metrics as \"illustrative\".\n• Prefer modern APIs: async/await, actors, URLSession, BGTaskScheduler, SwiftData/Core Data, modern Keychain usage, App Transport Security, App Attest when relevant.\n• If algorithms/DS: include complexity, invariants, and (where apt) a brief correctness sketch.\n• If system design: cover data flow, failure modes, backpressure, offline, observability, scaling knobs, idempotency, and SLO/SLA considerations.\n\n— Depth toggle —\n{DEPTH := \"{{depth}}\"} // options: quick | standard | deep\n• quick: one sentence per section; code ≤ 12 lines.\n• standard: 2–4 bullets per section; code ≤ 18 lines.\n• deep: fuller detail; code ≤ 25 lines.\n\n— Topic —\n{QUESTION := \"{{question}}\"}\n• Keep the format even for algorithms/system design; tune sections as needed.\n\n— Answer Format (produce exactly these sections with # headers) —\n\n# Signpost\nOne sentence on what you'll cover.\nAssumptions: <state assumptions if any, else \"None\">.\n\n# One‑liner (Definition + Context)\n<crisp definition and where it fits in the iOS stack; name primary frameworks/components>\n\n# Why it matters (Impact)\n• User/business impact (with metrics if possible)\n• Engineering impact (quality, velocity, cost)\n\n# How it works (Mechanics)\n• Key principles (threads/lifecycle/memory/concurrency)\n• Data/lifecycle flow (source → transform → sink)\n• Invariants/constraints (e.g., idempotency, ordering, consistency)\n\n# APIs & Idioms\n• Core types/functions (include key signatures)\n• Swift idioms (value semantics, DI seams, async patterns)\n• Platform specifics (entitlements, Info.plist keys, background modes) when relevant\n• LLDB one‑liner for the topic (e.g., expr -l Swift -- ...) if debugging is pertinent\n\n# Mini Example (Swift, compile‑ready, ≤25 lines)\n<10–25 lines showing the canonical pattern; include imports; safe error handling; DI seam; modern concurrency>\n\n# Edge cases & Pitfalls\n• <race conditions / reentrancy / retain cycles / timeouts / offline / migrations / partial failure>\n• Guard rails (specific techniques: timeouts, retries with jitter, cancellation, idempotency keys, schema gates)\n\n# Performance & Complexity\n• Time/space/battery considerations; complexity if algorithms\n• Concrete knobs (batching, caching policy, QoS/priority, prefetch, backpressure)\n• Tools: Instruments views & what to inspect (Time Profiler, Allocations, Leaks, Energy, Network, Counters)\n\n# Concurrency & Memory\n• Isolation (actors/@MainActor), Sendable, reentrancy notes\n• ARC/COW implications (struct vs class, captured refs, escape analysis)\n• Cancellation propagation and priority inversion avoidance\n\n# Testing & Observability\n• Unit/integration/UI strategy (XCTest/XCUITest), fakes/mocks, URLProtocol, deterministic clocks\n• Flakiness control (idempotent setup/teardown, timeouts, runloop draining)\n• Observability: os_log/signposts (categories, subsystems), MetricKit (MXCrashDiagnostic/MXTaskMetrics), crash symbolication\n\n# Security & Privacy\n• Data risks; Keychain (kSecAttrAccessible…), Secure Enclave, ATS, App Attest/DeviceCheck where applicable\n• Permissions timing & copy; data minimization/retention; PII boundaries\n\n# Architecture & Trade‑offs\n• Placement in MVVM (and when to switch to TCA/Clean/VIPER)\n• Alternatives and when they win; SPM module boundaries; API surface & seam placement\n\n# Production Story (STAR, 30–45s)\nSituation/Task, Action, Result (with metrics; mark as illustrative if not real), Next steps.\n\n# Wrap‑up (Rules‑of‑thumb)\n• When to use\n• When to avoid\n• Handy heuristics\n\n— Additional micro‑rules (quietly enforce quality) —\n• Prefer structured concurrency to manual thread hops; annotate with @MainActor where UI is touched.\n• Show at least one DI point (protocol or initializer injection).\n• Use os_signpost for critical paths and name intervals meaningfully.\n• When networking, mention retries with exponential backoff + jitter, request‑level timeouts, and idempotency for unsafe verbs.\n• When persistence, mention model versioning/migration (Lightweight/Custom), background contexts, and merge policies.\n• When background work, reference BGTaskScheduler with constraints and watchdog behavior.\n• Avoid deprecated or legacy APIs unless comparing trade‑offs explicitly.\n• Keep examples framework‑agnostic unless the question mandates SwiftUI/UIKit specifics; if SwiftUI, call out lifecycle differences vs UIKit.\n• If uncertain data is required, state \"illustrative\" and proceed with rational defaults.",
+    "fields": [
+      {"key": "question", "label": "Interview Question", "type": "textarea", "required": true, "placeholder": "e.g., Explain how URLSession works and how you'd implement a robust networking layer"},
+      {"key": "experience", "label": "Years of iOS Experience", "type": "select", "options": ["1-2", "3-4", "5-6", "7-8", "9-10", "11-15", "15+"], "required": true},
+      {"key": "architecture", "label": "Preferred Architecture", "type": "select", "options": ["MVVM + DI", "MVC", "VIPER", "TCA", "Clean Architecture"], "required": true},
+      {"key": "depth", "label": "Answer Depth", "type": "select", "options": ["quick", "standard", "deep"], "required": true},
+      {"key": "iosBaseline", "label": "iOS Baseline", "type": "select", "options": ["current iOS + Swift 6 where applicable", "iOS 17+ Swift 5.9+", "iOS 16+ Swift 5.7+", "iOS 15+ Swift 5.5+"], "required": true}
+    ],
+    "tags": ["ios", "interview", "technical", "maang"]
+  },
+  {
+    "id": "deep-research-wizard",
+    "title": "Deep Research Wizard",
+    "icon": "🧠",
+    "description": "Advanced deep research with minimal inputs: topic + questions.",
+    "template": "Deep‑Research Wizard — Lite (Numbered dropdowns)\n\n# =========================\n# CONFIG — fill me in (minimal)\n# =========================\ntopic: \"{{topic}}\"\n\n# One per line. Prefix with \"SQ:\" to mark deep‑dives. Example:\n# What are the key risks?\n# SQ: Compare vendor lock‑in across top 3 options\nquestions: |\n  {{questions}}\n\nscope:\n  section_count: {{section_count}}\n  section_titles: {{section_titles}}\n\n# Human‑readable labels chosen from dropdowns below\naudience_label: \"{{audience_label}}\"\nresearcher_profile_label: \"{{researcher_profile_label}}\"\n\n# =========================\n# PROMPT — do not edit below this line\n# =========================\nYou are the **Deep‑Research Wizard (Lite)**. Assume **advanced depth** by default.\n\n## Normalize Inputs\n- Strip leading numbering from labels (e.g., \"1) \").\n- Parse `audience_label` into {type, expertise}. Examples:\n  - \"Intermediate Executive\" → {type: executive, expertise: intermediate}\n  - \"Expert Engineer\" → {type: engineer, expertise: expert}\n  - \"Intermediate Policy\" → {type: policy, expertise: intermediate}\n  - \"Intermediate General\" → {type: general, expertise: intermediate}\n  - \"Novice General\" → {type: general, expertise: novice}\n- Parse `researcher_profile_label` into {role, years_experience}. Examples:\n  - \"7-year Senior Analyst\" → {role: Senior Analyst, years_experience: 7}\n  - \"12-year Domain SME\" → {role: Domain SME, years_experience: 12}\n- Split `questions` by newline:\n  - Lines starting with `SQ:` → sub-questions\n  - All other lines → guiding questions\n  - Ignore empty lines and dedupe.\n\n## Objectives\n1) Infer and echo a crisp Primary Question from `topic`.\n2) Answer guiding questions and sub‑questions with evidence and inline links.\n3) Deliver exactly `scope.section_count` advanced‑level sections.\n\n## Built‑in defaults (no user input needed)\n- Triangulation: Back key claims with ≥2 independent credible sources when available; prefer primary/official data.\n- Recency (automatic): Choose an appropriate window based on topic; favor very recent sources for fast‑moving areas, include seminal works for fundamentals.\n- Search craft: Use site:, filetype:, intitle:, boolean ops; add non‑English variants if indicated.\n- Dates: Distinguish publish vs event dates.\n- Transparency: Mark weakly supported claims UNVERIFIED and state what would raise confidence.\n\n## Method (loop until complete)\nA) Plan — Restate topic & success criteria (3–5 bullets). Build a Question Map (Primary → guiding → SQs).\nB) Search — Broad → focused → site/filetype passes; log every query and why it was run.\nC) Source Triage — Maintain Source Log:\n   [ID, Title, Author/Org, Publisher, Date, URL, Type, Summary(≤5 bullets), Key Data(≤25 words), Relevance(SQ IDs), Reliability(1–5), Notes].\nD) Extract — Build Evidence Matrix (SQ ↔ claims/data ↔ Source IDs) with Confidence 0–100 and Triangulation Count.\nE) Analyze — Compare viewpoints; quantify trade‑offs; note assumptions/biases; include credible counter‑evidence.\nF) Synthesize — Produce `scope.section_count` sections (use `section_titles` if provided). Each section: Bottom line first → reasoning → evidence call‑outs with inline links.\nG) Completion check — Stop when: (i) all mapped questions are addressed; and (ii) two consecutive search rounds add <10% new info. If not, deliver best‑effort + list top gaps & next steps.\n\n## Deliverables (in order)\n1) Executive Summary — 8–12 bullets tuned to the normalized audience.\n2) Key Findings — confidence scores + 1–2 inline links each.\n3) Deep‑Dive Sections — exactly `scope.section_count`.\n4) Comparative Tables/Matrices — features, timelines, cost/benefit, pros/cons where helpful.\n5) Evidence Matrix — claims ↔ sources with confidence & triangulation.\n6) Limitations & Uncertainties — what would change conclusions.\n7) Practical Recommendations — if decision support is implied.\n8) Appendix — Source Log and Queries Log (all queries used).\n\n## Output formatting\n- Clear headings; tight sentences; tables where they help.\n- Cite with inline hyperlinks (no special style).\n- Match tone to audience and researcher_profile.\n- Begin by echoing the Primary Question, Plan, and Question Map, then proceed.\n",
+    "fields": [
+      { "key": "topic", "label": "Topic", "type": "text", "required": true, "placeholder": "e.g., Privacy-preserving analytics for mobile apps" },
+      { "key": "questions", "label": "Questions (one per line; prefix 'SQ:' for deep‑dives)", "type": "textarea", "required": false, "placeholder": "What are the main risks?\nSQ: Compare vendor lock‑in across top 3 options" },
+      { "key": "section_count", "label": "Section Count", "type": "number", "min": 1, "max": 20, "required": true, "default": 5 },
+      { "key": "section_titles", "label": "Section Titles (optional JSON array)", "type": "text", "required": false, "placeholder": "[\"Intro\",\"Options\",\"Risks\",\"Recommendation\"]" },
+      {
+        "key": "audience_label",
+        "label": "Audience",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Intermediate Executive",
+          "2) Expert Engineer",
+          "3) Intermediate Engineer",
+          "4) Intermediate Policy",
+          "5) Intermediate General",
+          "6) Novice General"
+        ],
+        "default": "1) Intermediate Executive"
+      },
+  
+      {
+        "key": "researcher_profile_label",
+        "label": "Researcher Profile",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) 12-year Domain SME",
+          "2) 10-year Investigative Journalist",
+          "3) 7-year Senior Analyst",
+          "4) 7-year Data Scientist",
+          "5) 8-year Librarian",
+          "6) 6-year Policy Researcher"
+        ],
+        "default": "3) 7-year Senior Analyst"
+      }
+    ],
+    "tags": ["research","analysis","wizard"]
+  },
+  {
     "id": "blog-outline",
     "title": "Blog Outline",
     "icon": "📝",
-    "description": "Create a structured blog outline for your content.",
-    "template": "Create a detailed blog outline about {{topic}} for {{audience}} with a {{tone}} tone. Include {{sections}} sections and key takeaways.",
+    "description": "Create a high-quality blog outline with minimal inputs: topic + questions.",
+    "template": "Blog Outline — Lite (Numbered dropdowns)\n\n# =========================\n# CONFIG — fill me in (minimal)\n# =========================\ntopic: \"{{topic}}\"\n\n# One per line. Optional helpers:\n# H2: <force this as a section title>\n# FAQ: <question to include in FAQ>\n# VISUAL: <diagram/table idea>\nquestions: |\n  {{questions}}\n\nscope:\n  section_count: {{section_count}}\n  section_titles: {{section_titles}}\n\n# Human‑readable labels chosen from dropdowns below\naudience_label: \"{{audience_label}}\"\ntone_label: \"{{tone_label}}\"\n\n# =========================\n# PROMPT — do not edit below this line\n# =========================\nYou are the **Blog Outline Wizard (Lite)**. Assume an advanced, professional outline by default.\n\n## Normalize Inputs\n- Strip leading numbering from labels (e.g., \"1) \").\n- Parse `audience_label` into {type, expertise}. Examples:\n  - \"Executive (Intermediate)\" → {type: executive, expertise: intermediate}\n  - \"Engineer (Expert)\" → {type: engineer, expertise: expert}\n  - \"General (Novice)\" → {type: general, expertise: novice}\n- Parse `tone_label` into a style descriptor (e.g., \"Technical & Precise\").\n- Split `questions` by newline and route:\n  - Lines starting with **H2:** → forced H2 section titles\n  - Lines starting with **FAQ:** → FAQ questions\n  - Lines starting with **VISUAL:** → visual suggestions\n  - Other lines → guiding notes/themes\n\n## Objectives\n1) Propose 3–5 compelling titles and a one‑sentence thesis tailored to the audience & tone.\n2) Produce exactly `scope.section_count` H2 sections (use `section_titles` if provided), each with 3–5 H3 talking points.\n3) Integrate the forced sections, FAQ items, and visuals from `questions`.\n\n## Built‑in defaults (no user input needed)\n- Reader intent first: Identify search/reader intent (TOFU/MOFU/BOFU) and angle the outline accordingly.\n- Evidence‑aware: Where claims are likely, note \"source needed\" and suggest credible source types.\n- SEO hygiene: Include a primary keyword, 5–8 supporting keywords, a 155‑char meta description, and a clean slug.\n- Clarity: One idea per bullet; avoid fluff; prioritize scannability.\n- Story arc: Hook → problem → solution → objections/risks → conclusion/CTA.\n\n## Method (fast loop)\nA) Plan — 3–5 bullets on audience, intent, angle.\nB) Outline Draft — H1 title → H2 sections (exactly `section_count`) with H3 bullets per section.\nC) Enrichment — Add FAQs (3–5), visual ideas, and internal/external link suggestions.\nD) Polish — Provide title options, meta, slug, and writing brief (tone, voice, reading level hint).\n\n## Deliverables (in order)\n1) Title Options (3–5) + One‑sentence Thesis\n2) Audience & Intent Snapshot (who it’s for, what they need, angle)\n3) Outline (H2/H3) — exactly `scope.section_count` H2s; 3–5 H3s each\n4) Key Takeaways (5–7 bullets)\n5) FAQs (3–5)\n6) SEO Pack — primary + supporting keywords, meta (≤155 chars), slug\n7) Visual Suggestions — diagrams/tables where they help\n8) Linking Suggestions — internal (generic placeholders if site unknown) + external authoritative sources\n9) Writing Brief — tone, voice, target reading level, rough word count per section\n\n## Output formatting\n- Use clear headings, tight bullets, and inline links only as suggestions (no full citations needed).\n- Start with Title Options & Thesis, then Audience & Intent, then the Outline.",
     "fields": [
-      {"key": "topic", "label": "Topic", "type": "text", "required": true, "placeholder": "e.g., SwiftUI performance"},
-      {"key": "audience", "label": "Audience", "type": "text", "required": true, "placeholder": "e.g., iOS developers"},
-      {"key": "tone", "label": "Tone", "type": "select", "options": ["Professional", "Friendly", "Technical"], "required": true},
-      {"key": "sections", "label": "Number of Sections", "type": "number", "min": 3, "max": 10, "required": true}
+      {
+        "key": "topic",
+        "label": "Topic",
+        "type": "text",
+        "required": true,
+        "placeholder": "e.g., SwiftUI performance tuning"
+      },
+      {
+        "key": "questions",
+        "label": "Questions & Notes (one per line — use H2:/FAQ:/VISUAL: prefixes as needed)",
+        "type": "textarea",
+        "required": false,
+        "placeholder": "H2: Common performance pitfalls\nFAQ: What profiler views should I learn first?\nVISUAL: Before/after rendering diagram\nBenchmarking checklist"
+      },
+      {
+        "key": "section_count",
+        "label": "Section Count",
+        "type": "number",
+        "min": 3,
+        "max": 12,
+        "required": true,
+        "default": 6
+      },
+      {
+        "key": "section_titles",
+        "label": "Section Titles (optional JSON array)",
+        "type": "text",
+        "required": false,
+        "placeholder": "[\"Intro\",\"Pitfalls\",\"Profiling\",\"Optimizations\",\"Case Study\",\"Wrap-up\"]"
+      },
+      {
+        "key": "audience_label",
+        "label": "Audience",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Executive (Intermediate)",
+          "2) Engineer (Expert)",
+          "3) Engineer (Intermediate)",
+          "4) Product Manager (Intermediate)",
+          "5) General Tech (Intermediate)",
+          "6) General (Novice)"
+        ],
+        "default": "2) Engineer (Expert)"
+      },
+      {
+        "key": "tone_label",
+        "label": "Tone",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Authoritative & Practical",
+          "2) Technical & Precise",
+          "3) Friendly & Approachable",
+          "4) Thought Leadership",
+          "5) Conversational Storytelling",
+          "6) Playful"
+        ],
+        "default": "1) Authoritative & Practical"
+      }
     ],
-    "tags": ["writing", "content"]
-  },
-  {
-    "id": "code-review",
-    "title": "Code Review",
-    "icon": "💻",
-    "description": "Ask for a structured code review.",
-    "template": "Review the following {{language}} code for {{focus}}. Be specific about {{constraints}}.\n\nCode:\n\n{{code}}",
-    "fields": [
-      {"key": "language", "label": "Language", "type": "select", "options": ["Swift", "Kotlin", "TypeScript", "Python", "JavaScript", "Java", "C#"], "required": true},
-      {"key": "focus", "label": "Focus Areas", "type": "text", "placeholder": "e.g., performance, readability", "required": true},
-      {"key": "constraints", "label": "Constraints", "type": "text", "placeholder": "e.g., iOS 16 minimum"},
-      {"key": "code", "label": "Code", "type": "textarea", "required": true}
-    ],
-    "tags": ["dev", "review"]
-  },
-  {
-    "id": "marketing-ad",
-    "title": "Marketing Ad Copy",
-    "icon": "📣",
-    "description": "Generate compelling marketing ad copy.",
-    "template": "Create a {{adType}} ad for {{product}} targeting {{audience}}. The tone should be {{tone}} and highlight {{benefits}}. Include a strong call-to-action.",
-    "fields": [
-      {"key": "product", "label": "Product/Service", "type": "text", "required": true, "placeholder": "e.g., Project management app"},
-      {"key": "audience", "label": "Target Audience", "type": "text", "required": true, "placeholder": "e.g., Small business owners"},
-      {"key": "adType", "label": "Ad Type", "type": "select", "options": ["Social Media", "Email", "Banner", "Video Script"], "required": true},
-      {"key": "tone", "label": "Tone", "type": "select", "options": ["Urgent", "Friendly", "Professional", "Playful"], "required": true},
-      {"key": "benefits", "label": "Key Benefits", "type": "text", "required": true, "placeholder": "e.g., saves time, increases productivity"}
-    ],
-    "tags": ["marketing", "advertising"]
-  },
-  {
-    "id": "press-release",
-    "title": "Press Release",
-    "icon": "🗞️",
-    "description": "Draft a professional press release.",
-    "template": "FOR IMMEDIATE RELEASE\n\n{{headline}}\n\n{{location}}, {{date}} - {{company}} announces {{announcement}}. {{details}}\n\n{{quote}}\n\nAbout {{company}}: {{companyDescription}}\n\nContact: {{contact}}",
-    "fields": [
-      {"key": "headline", "label": "Headline", "type": "text", "required": true, "placeholder": "e.g., Company X Launches Revolutionary AI Tool"},
-      {"key": "company", "label": "Company Name", "type": "text", "required": true},
-      {"key": "location", "label": "Location", "type": "text", "required": true, "placeholder": "e.g., San Francisco, CA"},
-      {"key": "date", "label": "Date", "type": "text", "required": true, "placeholder": "e.g., March 15, 2024"},
-      {"key": "announcement", "label": "Main Announcement", "type": "text", "required": true, "placeholder": "e.g., the launch of their new AI platform"},
-      {"key": "details", "label": "Details", "type": "textarea", "required": true, "placeholder": "Provide more context and details"},
-      {"key": "quote", "label": "Executive Quote", "type": "textarea", "required": true, "placeholder": "Quote from CEO or spokesperson"},
-      {"key": "companyDescription", "label": "Company Description", "type": "textarea", "required": true},
-      {"key": "contact", "label": "Contact Information", "type": "text", "required": true}
-    ],
-    "tags": ["pr", "news"]
+    "tags": ["writing", "content", "outline"]
   },
   {
     "id": "lesson-plan",
     "title": "Lesson Plan",
     "icon": "🎓",
-    "description": "Create a structured lesson plan.",
-    "template": "Lesson Plan: {{subject}}\nGrade Level: {{gradeLevel}}\nDuration: {{duration}} minutes\n\nObjectives:\n{{objectives}}\n\nMaterials:\n{{materials}}\n\nActivities:\n{{activities}}\n\nAssessment:\n{{assessment}}",
+    "description": "Plan a high-quality lesson with minimal inputs: subject + notes.",
+    "template": "Lesson Plan — Lite (Numbered dropdowns)\n\n# =========================\n# CONFIG — fill me in (minimal)\n# =========================\nsubject: \"{{subject}}\"\n\n# One per line. Optional helpers:\n# OBJ: <learning objective>\n# H2: <force this as a lesson phase>\n# MATERIAL: <resource/tool>\n# ACTIVITY: <student task>\n# ASSESS: <check for understanding or summative>\n# DIFF: <differentiation/extension>\n# ELL: <language support>\n# SPED: <accommodation>\n# TECH: <tool/platform>\n# EXIT: <exit ticket prompt>\n# RUBRIC: <criterion>\nnotes: |\n  {{notes}}\n\nscope:\n  section_count: {{section_count}}\n  section_titles: {{section_titles}}\n\nduration_minutes: {{duration_minutes}}\n\n# Human‑readable labels chosen from dropdowns below\naudience_label: \"{{audience_label}}\"\ninstructional_mode_label: \"{{instructional_mode_label}}\"\n\n# =========================\n# PROMPT — do not edit below this line\n# =========================\nYou are the **Lesson Plan Wizard (Lite)**. Assume an advanced, professional lesson plan by default.\n\n## Normalize Inputs\n- Strip leading numbering from labels (e.g., \"1) \").\n- Parse `audience_label` into {band, grades, ages}. Examples:\n  - \"Elementary (Grades 3–5)\" → {band: elementary, grades: \"3–5\", ages: ~8–11}\n  - \"High School (Grades 9–12)\" → {band: high-school, grades: \"9–12\", ages: ~14–18}\n  - \"Adult/Professional Training\" → {band: adult, grades: null, ages: 18+}\n- Parse `instructional_mode_label` to pick a **phase scaffold**:\n  - Direct Instruction → *Hook → Teach (Model) → Guided Practice → Independent Practice → Exit Ticket*\n  - Guided Inquiry (5E) → *Engage → Explore → Explain → Elaborate → Evaluate*\n  - Project‑Based Learning → *Launch → Inquiry → Build → Iterate/Feedback → Present*\n  - Workshop/Lab → *Mini‑lesson → Lab/Practice → Confer/Feedback → Share/Debrief → Assess*\n  - Seminar/Socratic → *Prep → Question Storm → Dialogue → Synthesis → Reflection*\n  - Flipped Classroom → *Pre‑work Check → Application → Collaboration → Synthesis → Exit*\n- Split `notes` by newline and route:\n  - **OBJ:** → learning objectives\n  - **H2:** → forced phase titles\n  - **MATERIAL:** → materials list\n  - **ACTIVITY:** → activity requirements\n  - **ASSESS:** → assessment items (formative/summative)\n  - **DIFF:/ELL:/SPED:** → differentiation & supports\n  - **TECH:** → tools/platforms\n  - **EXIT:** → exit ticket prompts\n  - **RUBRIC:** → rubric criteria\n  - Other lines → guidance/themes\n  - Ignore empty lines and dedupe.\n\n## Objectives\n1) Translate `OBJ:` lines into 3–5 **SMART objectives** with measurable verbs.\n2) Align activities and assessments to each objective (backward design).\n\n## Built‑in defaults (no user input needed)\n- **Alignment:** Objectives ↔ Activities ↔ Assessments; call out any misalignments.\n- **UDL & Accessibility:** Offer multiple means of engagement/action/expression; list ELL/SPED supports when signaled.\n- **Timing:** Allocate minutes per phase so totals ≈ `duration_minutes` (include a +/− 10% buffer).\n- **Checks for Understanding:** Include quick CFUs (e.g., fist‑to‑five, mini‑whiteboards, short quizzes) in relevant phases.\n- **Evidence:** For summative items, include rubric criteria (3 performance levels) if `RUBRIC:` lines exist; otherwise suggest draft criteria.\n\n## Method (fast loop)\nA) **Plan** — 3–5 bullets on learner profile, prior knowledge, goals.\nB) **Sequence** — Build H2 phases (exactly `scope.section_count`; use forced H2s if given). For each phase, provide:\n   - Time (minutes), Objective link, Teacher actions, Student actions, Materials/Tech, CFU, Differentiation notes.\nC) **Assessment** — Formative (inline CFUs) and Summative (task + rubric sketch).\nD) **Polish** — Materials & prep checklist; room/tech setup; exit ticket; extensions/homework if present.\n\n## Deliverables (in order)\n1) **Lesson Overview** — subject, audience (normalized), duration, instructional mode.\n2) **SMART Objectives (3–5)** — each with success criteria & assessment link.\n3) **Materials & Prep** — consolidated checklist.\n4) **Lesson Sequence (H2/H3)** — exactly `scope.section_count` phases; each with time, teacher vs student actions, CFUs, differentiation, tech.\n5) **Assessment Plan** — formative & summative; rubric criteria (3 levels) if available.\n6) **Differentiation & Supports** — ELL/SPED/extension strategies.\n7) **Exit Ticket & Extensions** — prompts and optional homework.\n8) **Timing Table** — phase → minutes → cumulative total.\n\n## Output formatting\n- Use clear headings and tight bullets; tables where they help.\n- Start with **Lesson Overview**, then **Objectives**, then **Sequence**.\n- Keep links as suggestions only (no full citations required).",
     "fields": [
-      {"key": "subject", "label": "Subject", "type": "text", "required": true, "placeholder": "e.g., Introduction to Fractions"},
-      {"key": "gradeLevel", "label": "Grade Level", "type": "text", "required": true, "placeholder": "e.g., 4th Grade"},
-      {"key": "duration", "label": "Duration (minutes)", "type": "number", "min": 15, "max": 180, "required": true},
-      {"key": "objectives", "label": "Learning Objectives", "type": "textarea", "required": true, "placeholder": "What students will learn"},
-      {"key": "materials", "label": "Materials Needed", "type": "textarea", "required": true, "placeholder": "List required materials"},
-      {"key": "activities", "label": "Activities", "type": "textarea", "required": true, "placeholder": "Describe lesson activities"},
-      {"key": "assessment", "label": "Assessment Method", "type": "textarea", "required": true, "placeholder": "How will you assess learning?"}
+      {
+        "key": "subject",
+        "label": "Subject",
+        "type": "text",
+        "required": true,
+        "placeholder": "e.g., Introduction to Fractions"
+      },
+      {
+        "key": "notes",
+        "label": "Notes & Additions (one per line — use OBJ:/H2:/MATERIAL:/ACTIVITY:/ASSESS:/DIFF:/ELL:/SPED:/TECH:/EXIT:/RUBRIC: prefixes as needed)",
+        "type": "textarea",
+        "required": false,
+        "placeholder": "OBJ: Students will decompose fractions into unit fractions\nH2: Guided Practice\nMATERIAL: Fraction circles, whiteboards\nACTIVITY: Pair work decomposing 3/4 into unit fractions\nASSESS: 5-question exit ticket\nDIFF: Provide manipulatives and sentence stems\nELL: Visual vocabulary cards\nTECH: Document camera\nEXIT: Explain one way to show 2/3 on a number line\nRUBRIC: Accuracy of decomposition"
+      },
+      {
+        "key": "duration_minutes",
+        "label": "Duration (minutes)",
+        "type": "number",
+        "min": 15,
+        "max": 240,
+        "required": true,
+        "default": 45
+      },
+      {
+        "key": "section_count",
+        "label": "Phase Count",
+        "type": "number",
+        "min": 3,
+        "max": 10,
+        "required": true,
+        "default": 5
+      },
+      {
+        "key": "section_titles",
+        "label": "Phase Titles (optional JSON array)",
+        "type": "text",
+        "required": false,
+        "placeholder": "[\"Hook\",\"Teach\",\"Guided Practice\",\"Independent Practice\",\"Exit Ticket\"]"
+      },
+      {
+        "key": "audience_label",
+        "label": "Audience",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Elementary (Grades 3–5)",
+          "2) Middle School (Grades 6–8)",
+          "3) High School (Grades 9–12)",
+          "4) Undergraduate (Intro)",
+          "5) Undergraduate (Advanced)",
+          "6) Adult/Professional Training"
+        ],
+        "default": "3) High School (Grades 9–12)"
+      },
+      {
+        "key": "instructional_mode_label",
+        "label": "Instructional Mode",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Direct Instruction",
+          "2) Guided Inquiry (5E)",
+          "3) Project‑Based Learning",
+          "4) Workshop/Lab",
+          "5) Seminar/Socratic",
+          "6) Flipped Classroom"
+        ],
+        "default": "2) Guided Inquiry (5E)"
+      }
     ],
-    "tags": ["education", "teaching"]
-  },
-  {
-    "id": "test-cases",
-    "title": "Test Case Generator",
-    "icon": "🧪",
-    "description": "Generate comprehensive test cases.",
-    "template": "Test Cases for {{feature}}\n\nTest Scenario: {{scenario}}\nPlatform: {{platform}}\nPriority: {{priority}}\n\nPositive Test Cases:\n{{positiveTests}}\n\nNegative Test Cases:\n{{negativeTests}}\n\nEdge Cases:\n{{edgeCases}}",
-    "fields": [
-      {"key": "feature", "label": "Feature/Function", "type": "text", "required": true, "placeholder": "e.g., User Login"},
-      {"key": "scenario", "label": "Test Scenario", "type": "text", "required": true, "placeholder": "e.g., User authentication flow"},
-      {"key": "platform", "label": "Platform", "type": "select", "options": ["Web", "Mobile", "Desktop", "API"], "required": true},
-      {"key": "priority", "label": "Priority", "type": "select", "options": ["High", "Medium", "Low"], "required": true},
-      {"key": "positiveTests", "label": "Positive Test Cases", "type": "textarea", "required": true, "placeholder": "Valid input scenarios"},
-      {"key": "negativeTests", "label": "Negative Test Cases", "type": "textarea", "required": true, "placeholder": "Invalid input scenarios"},
-      {"key": "edgeCases", "label": "Edge Cases", "type": "textarea", "required": true, "placeholder": "Boundary conditions"}
-    ],
-    "tags": ["testing", "qa"]
+    "tags": ["education", "teaching", "lesson"]
   }
 ]
