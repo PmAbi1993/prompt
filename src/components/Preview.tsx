@@ -54,20 +54,20 @@ export function Preview({ content, onCopy }: PreviewProps) {
       </div>
       
       <div className="relative">
-        <pre
-          ref={previewRef}
-          className="w-full p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap font-mono max-h-96 overflow-y-auto focus:outline-none focus:ring-2 focus:ring-blue-500"
-          tabIndex={0}
-          role="textbox"
-          aria-label="Generated prompt preview"
-          aria-readonly="true"
-        >
-          {content || 'Your generated prompt will appear here...'}
-        </pre>
-        
-        {!content.trim() && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <p className="text-gray-400 dark:text-gray-500 text-sm">
+        {content.trim() ? (
+          <pre
+            ref={previewRef}
+            className="w-full p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap font-mono max-h-96 overflow-y-auto focus:outline-none focus:ring-2 focus:ring-blue-500"
+            tabIndex={0}
+            role="textbox"
+            aria-label="Generated prompt preview"
+            aria-readonly="true"
+          >
+            {content}
+          </pre>
+        ) : (
+          <div className="w-full p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg min-h-[120px] flex items-center justify-center">
+            <p className="text-gray-400 dark:text-gray-500 text-sm text-center">
               Fill out the form to see your prompt preview
             </p>
           </div>
