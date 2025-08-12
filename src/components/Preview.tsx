@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button } from './Button';
 import { copyToClipboard, selectText } from '../lib/clipboard';
-import { useToast } from './Toast';
+import { useToast } from '../contexts/ToastContext';
 
 interface PreviewProps {
   content: string;
