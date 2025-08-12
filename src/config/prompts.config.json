@@ -133,17 +133,79 @@
     "id": "lesson-plan",
     "title": "Lesson Plan",
     "icon": "🎓",
-    "description": "Create a structured lesson plan.",
-    "template": "Lesson Plan: {{subject}}\nGrade Level: {{gradeLevel}}\nDuration: {{duration}} minutes\n\nObjectives:\n{{objectives}}\n\nMaterials:\n{{materials}}\n\nActivities:\n{{activities}}\n\nAssessment:\n{{assessment}}",
+    "description": "Plan a high-quality lesson with minimal inputs: subject + notes.",
+    "template": "Lesson Plan — Lite (Numbered dropdowns)\n\n# =========================\n# CONFIG — fill me in (minimal)\n# =========================\nsubject: \"{{subject}}\"\n\n# One per line. Optional helpers:\n# OBJ: <learning objective>\n# H2: <force this as a lesson phase>\n# MATERIAL: <resource/tool>\n# ACTIVITY: <student task>\n# ASSESS: <check for understanding or summative>\n# DIFF: <differentiation/extension>\n# ELL: <language support>\n# SPED: <accommodation>\n# TECH: <tool/platform>\n# EXIT: <exit ticket prompt>\n# RUBRIC: <criterion>\nnotes: |\n  {{notes}}\n\nscope:\n  section_count: {{section_count}}\n  section_titles: {{section_titles}}\n\nduration_minutes: {{duration_minutes}}\n\n# Human‑readable labels chosen from dropdowns below\naudience_label: \"{{audience_label}}\"\ninstructional_mode_label: \"{{instructional_mode_label}}\"\n\n# =========================\n# PROMPT — do not edit below this line\n# =========================\nYou are the **Lesson Plan Wizard (Lite)**. Assume an advanced, professional lesson plan by default.\n\n## Normalize Inputs\n- Strip leading numbering from labels (e.g., \"1) \").\n- Parse `audience_label` into {band, grades, ages}. Examples:\n  - \"Elementary (Grades 3–5)\" → {band: elementary, grades: \"3–5\", ages: ~8–11}\n  - \"High School (Grades 9–12)\" → {band: high-school, grades: \"9–12\", ages: ~14–18}\n  - \"Adult/Professional Training\" → {band: adult, grades: null, ages: 18+}\n- Parse `instructional_mode_label` to pick a **phase scaffold**:\n  - Direct Instruction → *Hook → Teach (Model) → Guided Practice → Independent Practice → Exit Ticket*\n  - Guided Inquiry (5E) → *Engage → Explore → Explain → Elaborate → Evaluate*\n  - Project‑Based Learning → *Launch → Inquiry → Build → Iterate/Feedback → Present*\n  - Workshop/Lab → *Mini‑lesson → Lab/Practice → Confer/Feedback → Share/Debrief → Assess*\n  - Seminar/Socratic → *Prep → Question Storm → Dialogue → Synthesis → Reflection*\n  - Flipped Classroom → *Pre‑work Check → Application → Collaboration → Synthesis → Exit*\n- Split `notes` by newline and route:\n  - **OBJ:** → learning objectives\n  - **H2:** → forced phase titles\n  - **MATERIAL:** → materials list\n  - **ACTIVITY:** → activity requirements\n  - **ASSESS:** → assessment items (formative/summative)\n  - **DIFF:/ELL:/SPED:** → differentiation & supports\n  - **TECH:** → tools/platforms\n  - **EXIT:** → exit ticket prompts\n  - **RUBRIC:** → rubric criteria\n  - Other lines → guidance/themes\n  - Ignore empty lines and dedupe.\n\n## Objectives\n1) Translate `OBJ:` lines into 3–5 **SMART objectives** with measurable verbs.\n2) Align activities and assessments to each objective (backward design).\n\n## Built‑in defaults (no user input needed)\n- **Alignment:** Objectives ↔ Activities ↔ Assessments; call out any misalignments.\n- **UDL & Accessibility:** Offer multiple means of engagement/action/expression; list ELL/SPED supports when signaled.\n- **Timing:** Allocate minutes per phase so totals ≈ `duration_minutes` (include a +/− 10% buffer).\n- **Checks for Understanding:** Include quick CFUs (e.g., fist‑to‑five, mini‑whiteboards, short quizzes) in relevant phases.\n- **Evidence:** For summative items, include rubric criteria (3 performance levels) if `RUBRIC:` lines exist; otherwise suggest draft criteria.\n\n## Method (fast loop)\nA) **Plan** — 3–5 bullets on learner profile, prior knowledge, goals.\nB) **Sequence** — Build H2 phases (exactly `scope.section_count`; use forced H2s if given). For each phase, provide:\n   - Time (minutes), Objective link, Teacher actions, Student actions, Materials/Tech, CFU, Differentiation notes.\nC) **Assessment** — Formative (inline CFUs) and Summative (task + rubric sketch).\nD) **Polish** — Materials & prep checklist; room/tech setup; exit ticket; extensions/homework if present.\n\n## Deliverables (in order)\n1) **Lesson Overview** — subject, audience (normalized), duration, instructional mode.\n2) **SMART Objectives (3–5)** — each with success criteria & assessment link.\n3) **Materials & Prep** — consolidated checklist.\n4) **Lesson Sequence (H2/H3)** — exactly `scope.section_count` phases; each with time, teacher vs student actions, CFUs, differentiation, tech.\n5) **Assessment Plan** — formative & summative; rubric criteria (3 levels) if available.\n6) **Differentiation & Supports** — ELL/SPED/extension strategies.\n7) **Exit Ticket & Extensions** — prompts and optional homework.\n8) **Timing Table** — phase → minutes → cumulative total.\n\n## Output formatting\n- Use clear headings and tight bullets; tables where they help.\n- Start with **Lesson Overview**, then **Objectives**, then **Sequence**.\n- Keep links as suggestions only (no full citations required).",
     "fields": [
-      {"key": "subject", "label": "Subject", "type": "text", "required": true, "placeholder": "e.g., Introduction to Fractions"},
-      {"key": "gradeLevel", "label": "Grade Level", "type": "text", "required": true, "placeholder": "e.g., 4th Grade"},
-      {"key": "duration", "label": "Duration (minutes)", "type": "number", "min": 15, "max": 180, "required": true},
-      {"key": "objectives", "label": "Learning Objectives", "type": "textarea", "required": true, "placeholder": "What students will learn"},
-      {"key": "materials", "label": "Materials Needed", "type": "textarea", "required": true, "placeholder": "List required materials"},
-      {"key": "activities", "label": "Activities", "type": "textarea", "required": true, "placeholder": "Describe lesson activities"},
-      {"key": "assessment", "label": "Assessment Method", "type": "textarea", "required": true, "placeholder": "How will you assess learning?"}
+      {
+        "key": "subject",
+        "label": "Subject",
+        "type": "text",
+        "required": true,
+        "placeholder": "e.g., Introduction to Fractions"
+      },
+      {
+        "key": "notes",
+        "label": "Notes & Additions (one per line — use OBJ:/H2:/MATERIAL:/ACTIVITY:/ASSESS:/DIFF:/ELL:/SPED:/TECH:/EXIT:/RUBRIC: prefixes as needed)",
+        "type": "textarea",
+        "required": false,
+        "placeholder": "OBJ: Students will decompose fractions into unit fractions\nH2: Guided Practice\nMATERIAL: Fraction circles, whiteboards\nACTIVITY: Pair work decomposing 3/4 into unit fractions\nASSESS: 5-question exit ticket\nDIFF: Provide manipulatives and sentence stems\nELL: Visual vocabulary cards\nTECH: Document camera\nEXIT: Explain one way to show 2/3 on a number line\nRUBRIC: Accuracy of decomposition"
+      },
+      {
+        "key": "duration_minutes",
+        "label": "Duration (minutes)",
+        "type": "number",
+        "min": 15,
+        "max": 240,
+        "required": true,
+        "default": 45
+      },
+      {
+        "key": "section_count",
+        "label": "Phase Count",
+        "type": "number",
+        "min": 3,
+        "max": 10,
+        "required": true,
+        "default": 5
+      },
+      {
+        "key": "section_titles",
+        "label": "Phase Titles (optional JSON array)",
+        "type": "text",
+        "required": false,
+        "placeholder": "[\"Hook\",\"Teach\",\"Guided Practice\",\"Independent Practice\",\"Exit Ticket\"]"
+      },
+      {
+        "key": "audience_label",
+        "label": "Audience",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Elementary (Grades 3–5)",
+          "2) Middle School (Grades 6–8)",
+          "3) High School (Grades 9–12)",
+          "4) Undergraduate (Intro)",
+          "5) Undergraduate (Advanced)",
+          "6) Adult/Professional Training"
+        ],
+        "default": "3) High School (Grades 9–12)"
+      },
+      {
+        "key": "instructional_mode_label",
+        "label": "Instructional Mode",
+        "type": "select",
+        "required": false,
+        "options": [
+          "1) Direct Instruction",
+          "2) Guided Inquiry (5E)",
+          "3) Project‑Based Learning",
+          "4) Workshop/Lab",
+          "5) Seminar/Socratic",
+          "6) Flipped Classroom"
+        ],
+        "default": "2) Guided Inquiry (5E)"
+      }
     ],
-    "tags": ["education", "teaching"]
+    "tags": ["education", "teaching", "lesson"]
   }
 ]
